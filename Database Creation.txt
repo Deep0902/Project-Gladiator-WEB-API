@@ -1,0 +1,61 @@
+CREATE TABLE [dbo].[Customer](
+	[CustomerID] int NOT NULL identity(100,1) primary key,
+	[FirstName] [varchar](20) NOT NULL,
+	[MiddleName] [varchar](20) NOT NULL,
+	[LastName] [varchar](20) NOT NULL,
+	[FatherName] [varchar](20) NOT NULL,
+	[MotherName] [varchar](20) NOT NULL,
+	[EmailID] [varchar](30) NULL,
+	[AadharNumber] [bigint] NOT NULL,
+	[DoB] [date] NOT NULL,
+	[Occupation] [varchar](20) NULL,
+	[DebitCardNo] [bigint] NULL,
+	[Onlinebanktest] [int] NULL,
+	[AccountNumber] [bigint] NULL,
+	[Password] [varchar](30) NULL,
+	[TransactionPassword] [varchar](30) NULL,
+	[AdminApprove] [bit] NULL)
+
+CREATE TABLE [dbo].[ResidentialAddress](
+	[CustomerID] int primary key NOT NULL foreign key references Customer(CustomerID),
+	[AddressLine1] [varchar](50) NOT NULL,
+	[AddressLine2] [varchar](50) NOT NULL,
+	[Landmark] [varchar](20) NOT NULL,
+	[State] [varchar](20) NOT NULL,
+	[City] [varchar](20) NOT NULL,
+	[Pincode] [int] NOT NULL,
+)
+
+CREATE TABLE [dbo].[PermanentAddress](
+	[CustomerID] int primary key NOT NULL foreign key references Customer(CustomerID),
+	[AddressLine1] [varchar](50) NOT NULL,
+	[AddressLine2] [varchar](50) NOT NULL,
+	[Landmark] [varchar](20) NOT NULL,
+	[State] [varchar](20) NOT NULL,
+	[City] [varchar](20) NOT NULL,
+	[Pincode] [int] NOT NULL);
+
+CREATE TABLE [dbo].[Payments](
+	[CustomerID] int primary key NOT NULL foreign key references Customer(CustomerID),
+	[PaymentType] [varchar](10) NOT NULL,
+	[FromAccount] [bigint] NOT NULL,
+	[ToAccount] [bigint] NOT NULL,
+	[TransactionDate] [datetime] NOT NULL,
+	[Remarks] [varchar](30) NULL,
+	[Amount] [bigint] NULL);
+
+CREATE TABLE [dbo].[Onlinebanktest](
+	[CustomerID] int primary key NOT NULL foreign key references Customer(CustomerID),
+	[AccountNumber] [bigint] NOT NULL,
+	[Password] [varchar](20) NOT NULL,
+	[TransactionPassword] [varchar](20) NOT NULL);
+
+CREATE TABLE [dbo].[AdminLogin](
+	[CustomerID] int primary key NOT NULL,
+	[UserID] [varchar](20) NOT NULL,
+	[Password] [varchar](20) NOT NULL);
+
+CREATE TABLE [dbo].[Login](
+	[CustomerID] int primary key NOT NULL foreign key references Customer(CustomerID),
+	[UserID] [varchar](20) NOT NULL,
+	[Password] [varchar](20) NOT NULL);
